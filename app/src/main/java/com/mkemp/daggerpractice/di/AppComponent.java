@@ -18,7 +18,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         // Hey component, here are all the modules you'll need to do what I want you to do
         modules = {
                 AndroidSupportInjectionModule.class,
-                ActivityBuildersModule.class
+                ActivityBuildersModule.class,
+                AppModule.class
         }
 )
 public interface AppComponent extends AndroidInjector<BaseApplication>
@@ -29,7 +30,7 @@ public interface AppComponent extends AndroidInjector<BaseApplication>
     @Component.Builder
     interface Builder
     {
-        // Pass my app
+        // Pass my app ... it will be available to the modules
         @BindsInstance
         Builder myAwesomeApplication(Application application);
         
