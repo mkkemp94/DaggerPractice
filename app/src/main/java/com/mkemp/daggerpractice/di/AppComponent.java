@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.mkemp.daggerpractice.BaseApplication;
 
+import javax.inject.Singleton;
+
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;
@@ -13,7 +15,10 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * Persists across the entire lifetime of the application.
  *
  * Inject BaseApplication (the client) into this AppComponent (the service)
+ *
+ * The dependencies that are declared here should exist as long as the application is alive (singleton)
  */
+@Singleton // AppComponent owns the singleton scope
 @Component(
         // Hey component, here are all the modules you'll need to do what I want you to do
         modules = {
