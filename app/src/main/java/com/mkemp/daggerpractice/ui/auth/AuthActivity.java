@@ -1,18 +1,25 @@
-package com.mkemp.daggerpractice;
+package com.mkemp.daggerpractice.ui.auth;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.RequestManager;
+import com.mkemp.daggerpractice.R;
+import com.mkemp.daggerpractice.viewmodels.ViewModelProviderFactory;
 
 import javax.inject.Inject;
 
+import androidx.lifecycle.ViewModelProvider;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class AuthActivity extends DaggerAppCompatActivity
 {
     private static final String TAG = "AuthActivity";
+    
+    @Inject
+    ViewModelProviderFactory providerFactory;
+    private AuthViewModel viewModel;
     
     @Inject
     Drawable logo;
@@ -26,6 +33,8 @@ public class AuthActivity extends DaggerAppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
     
+        viewModel = new ViewModelProvider(this, providerFactory).get(AuthViewModel.class);
+        
         setLogo();
     }
     
