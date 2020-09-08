@@ -7,13 +7,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.mkemp.daggerpractice.R;
-import com.mkemp.daggerpractice.util.Constants;
+import com.mkemp.daggerpractice.network.ExampleInterceptor;
 
 import javax.inject.Singleton;
 
 import androidx.core.content.ContextCompat;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,14 +24,29 @@ public class AppModule
 {
     // Put app dependencies in here like retrofit, glide, etc
     
+    @Provides
+    @Singleton
+    ExampleInterceptor provideInterceptor() { // This is where the Interceptor object is constructed
+        return new ExampleInterceptor();
+    }
+    
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient(ExampleInterceptor interceptor) { // The Interceptor is then added to the client
+        return new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+    }
+    
     @Singleton
     @Provides
-    static Retrofit provideRetrofitInstance()
+    static Retrofit provideRetrofitInstance(OkHttpClient okHttpClient)
     {
         return new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .baseUrl("http://localhost/")
                 .build();
     }
     
