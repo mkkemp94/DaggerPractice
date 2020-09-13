@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
@@ -69,19 +70,58 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         {
             case R.id.nav_profile:
             {
-                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.profileScreen);
+                // Clear back stack
+                NavOptions navOptions = new NavOptions.Builder()
+                        .setPopUpTo(R.id.main, true)
+                        .build();
+                
+                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(
+                        R.id.profileScreen,
+                        null,
+                        navOptions
+                );
+                
                 break;
             }
             
             case R.id.nav_posts:
             {
-                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.postsScreen);
+                if ( isValidDestination(R.id.postsScreen) )
+                {
+                    Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.postsScreen);
+                }
                 break;
+            }
+            
+            case android.R.id.home:
+            {
+                if ( drawerLayout.isDrawerOpen(GravityCompat.START) )
+                {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return true; // consume click
+                }
+                else
+                {
+                    return false; // don't consume click yet
+                }
             }
         }
         
         menuItem.setChecked(true);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+    
+    private boolean isValidDestination(int destination)
+    {
+        // Only valid if this is not the current location
+        return destination != Navigation.findNavController(this, R.id.nav_host_fragment).getCurrentDestination().getId();
+    }
+    
+    @Override
+    public boolean onSupportNavigateUp()
+    {
+        // Enables back arrow in nav drawer, and hamburger open. UI.
+        return NavigationUI.navigateUp(Navigation.findNavController(this, R.id.nav_host_fragment), drawerLayout);
     }
 }
