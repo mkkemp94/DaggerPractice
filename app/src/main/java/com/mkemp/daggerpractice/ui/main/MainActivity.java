@@ -1,9 +1,14 @@
 package com.mkemp.daggerpractice.ui.main;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.mkemp.daggerpractice.BaseActivity;
 import com.mkemp.daggerpractice.R;
+
+import androidx.annotation.NonNull;
 
 public class MainActivity extends BaseActivity
 {
@@ -12,5 +17,27 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch ( item.getItemId() )
+        {
+            case R.id.logout:
+            {
+                sessionManager.logOut();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
