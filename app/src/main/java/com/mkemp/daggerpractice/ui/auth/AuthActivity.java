@@ -1,5 +1,6 @@
 package com.mkemp.daggerpractice.ui.auth;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.bumptech.glide.RequestManager;
 import com.mkemp.daggerpractice.R;
 import com.mkemp.daggerpractice.models.User;
+import com.mkemp.daggerpractice.ui.main.MainActivity;
 import com.mkemp.daggerpractice.viewmodels.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -76,6 +78,7 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
                         {
                             showProgressBar(false);
                             Log.d(TAG, "onChanged: LOGIN SUCCESS: " + userAuthResource.data.getEmail());
+                            onLoginSuccess();
                             break;
                         }
                         
@@ -104,6 +107,12 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
         else progressBar.setVisibility(View.GONE);
     }
     
+    private void onLoginSuccess()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
     private void setLogo()
     {
         requestManager.load(logo)
