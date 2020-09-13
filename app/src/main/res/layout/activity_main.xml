@@ -6,4 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
+    <!-- For testing our fragment -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_container">
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.mkemp.daggerpractice.BaseActivity;
 import com.mkemp.daggerpractice.R;
+import com.mkemp.daggerpractice.ui.main.profile.ProfileFragment;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +18,15 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        testFragment();
+    }
+    
+    private void testFragment()
+    {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_container, new ProfileFragment())
+                .commit();
     }
     
     @Override
