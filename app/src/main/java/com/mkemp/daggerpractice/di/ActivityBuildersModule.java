@@ -1,9 +1,11 @@
 package com.mkemp.daggerpractice.di;
 
 import com.mkemp.daggerpractice.di.auth.AuthModule;
+import com.mkemp.daggerpractice.di.auth.AuthScope;
 import com.mkemp.daggerpractice.di.auth.AuthViewModelsModule;
 import com.mkemp.daggerpractice.di.main.MainFragmentBuildersModule;
 import com.mkemp.daggerpractice.di.main.MainModule;
+import com.mkemp.daggerpractice.di.main.MainScope;
 import com.mkemp.daggerpractice.di.main.MainViewModelsModule;
 import com.mkemp.daggerpractice.ui.auth.AuthActivity;
 import com.mkemp.daggerpractice.ui.main.MainActivity;
@@ -22,6 +24,7 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class ActivityBuildersModule
 {
     // This is the AuthComponent!!!
+    @AuthScope
     @ContributesAndroidInjector(
             modules = {
                     // This is only included in this sub component
@@ -32,6 +35,7 @@ public abstract class ActivityBuildersModule
     )
     abstract AuthActivity contributeAuthActivity();
     
+    @MainScope
     @ContributesAndroidInjector(
             modules = {
                     MainViewModelsModule.class,
